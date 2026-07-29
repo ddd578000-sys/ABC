@@ -1,0 +1,27 @@
+local Rayfield = loadstring(game:HttpGet("https://sirius.menu/rayfield"))()
+
+local Window = Rayfield:CreateWindow({
+    Name = "Lucky Block",
+    LoadingTitle = "Lucky Block",
+    LoadingSubtitle = "by ChatGPT",
+})
+
+local Tab = Window:CreateTab("Main", 4483362458)
+
+local Running = false
+
+Tab:CreateToggle({
+    Name = "Auto Spawn Lucky Block",
+    CurrentValue = false,
+    Flag = "AutoLucky",
+    Callback = function(Value)
+        Running = Value
+
+        task.spawn(function()
+            while Running do
+                game:GetService("ReplicatedStorage"):WaitForChild("SpawnLuckyBlock"):FireServer()
+                task.wait(0.1) -- ปรับเวลาได้
+            end
+        end)
+    end,
+})
